@@ -30,7 +30,7 @@ margin: 1rem;
 #today p {
   color:  rgba(2,20,105,1);
 }
-.add-border {
+#today-inner {
   border: 1px solid black;
   padding: 1rem;
   border-radius: 2px;
@@ -69,6 +69,14 @@ button {
 #forecast h4, .today-title > h3, aside > h2 {
   font-weight: 700;
   color:  rgba(2,20,105,1);
+}
+
+#button-inner button {
+  height: 40px;
+  margin-top: 1rem;
+  border-radius: 4px;
+  background-color: #cbc7c7;
+  font-weight: 500;
 }
 
 @media screen and (min-width: 1200px) {

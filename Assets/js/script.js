@@ -6,10 +6,14 @@ const buttonEl = document.querySelector("#search");
 const inputEl = document.querySelector("#city");
 const todayEl = document.querySelector("#today");
 const forecastEl = document.querySelector("#forecast");
+const previousEl = document.querySelector('#previous-search');
+let citySearch;
 
 //Vars
 const API_KEY = "57693c20cc9de93006be32fd645ff9bb";
 const todayDate = dayjs().utc().format("D");
+
+
 
 //Get the coordinates of the city entered
 const getCoordinates = (city) => {
@@ -37,6 +41,7 @@ const getWeather = async (lat, lon) => {
         return res.json();
       })
       .then(function (data) {
+        citySearch = data.city.name;
         data.list.map((dt) => {
           //map through data to get todays data & save in array
           const dateObj = dayjs.unix(dt.dt).format();
@@ -63,12 +68,14 @@ const getWeather = async (lat, lon) => {
 //Makes the top element showing todays weather
 const makeTodayWeather = (todayData) => {
   if (todayData.length != 0) {
+    const todayDiv = document.createElement('div');
+    todayDiv.setAttribute('id', 'today-inner')
     //Create the title
     const dateObj = dayjs.unix(todayData[0].dt).format();
     const title = document.createElement("div");
     title.className = "today-title";
     const cityTitle = document.createElement("h3");
-    cityTitle.textContent = `${inputEl.value} (${dayjs.utc(dateObj).format("DD/MM/YYYY")})`;
+    cityTitle.textContent = `${citySearch} (${dayjs.utc(dateObj).format("DD/MM/YYYY")})`;
     const icon = document.createElement("img");
     icon.className = "weather-icon";
     icon.src = `http://openweathermap.org/img/w/${todayData[0].weather[0].icon}.png`;
@@ -83,15 +90,16 @@ const makeTodayWeather = (todayData) => {
     hum.textContent = `Humidity: ${todayData[0].main.humidity} %`;
 
     //Append to today div
-    todayEl.append(title, temp, wind, hum);
-    todayEl.className = "add-border";
+    todayDiv.append(title, temp, wind, hum);
+    todayEl.append(todayDiv)
   }
 };
 
 //Makes the lower element showing the 5 day forecast
 const makeForecast = (forecastData) => {
-  console.log(forecastData);
   const fTitle = document.createElement("h4");
+  const forecastDiv = document.createElement('div');
+  forecastDiv.setAttribute('id', 'forecast-inner')
   fTitle.textContent = "5-Day Forecast:";
   const fData = document.createElement("div");
   fData.className = "forecast-wrapper";
@@ -117,11 +125,80 @@ const makeForecast = (forecastData) => {
     fData.append(singleDay);
   });
   //Append to Forecast div
-  forecastEl.append(fTitle, fData);
+  forecastDiv.append(fTitle, fData);
+  forecastEl.append(forecastDiv);
 };
+
+//Create a button for each saved city in local storage
+const handlePreviousSearch = () => {
+  const saved = JSON.parse(localStorage.getItem("city"));
+  if (saved !== null) {
+
+  
+  const uniqueArr = saved.filter((str, index) => saved.indexOf(str) === index);
+  let buttonInner = document.createElement('div');
+  buttonInner.setAttribute('id', 'button-inner')
+
+
+  uniqueArr.map(save => {
+    const newButton = document.createElement('button')
+    newButton.textContent = save;
+    newButton.value = save;
+    newButton.addEventListener('click', (e) => {
+      let today = document.querySelector("#today-inner");
+      let forecast = document.querySelector('#forecast-inner')
+    
+      if (today === null) {
+        getCoordinates(e.target.value);
+    
+      } else {
+        today.remove();
+        forecast.remove();
+        getCoordinates(e.target.value);
+      }
+    })
+    buttonInner.append(newButton)
+  })
+  previousEl.append(buttonInner)
+}
+}
+handlePreviousSearch()
+
 
 //Add event listener to the search button & call function
 buttonEl.addEventListener("click", () => {
-  const city = inputEl.value;
-  getCoordinates(city);
+  let today = document.querySelector("#today-inner");
+  let forecast = document.querySelector('#forecast-inner')
+  let button = document.querySelector('#button-inner')
+  let city = inputEl.value;
+
+  // //Saves the location to local storage 
+  // localStorage.setItem("city", city)
+  let saved = JSON.parse(localStorage.getItem("city"));
+    //Check if local storage is empty or not and save accordingly
+  if (saved === null) {
+    saved = localStorage.setItem("city", JSON.stringify([city]));
+  } else if (Array.isArray(saved)) {
+    let cityArr = saved;
+    cityArr.push(city);
+    localStorage.setItem("city", JSON.stringify(cityArr));
+  }
+
+
+  //Checks if data is already showing. If so, it removes it and calls function to add new data
+  if (today === null) {
+    getCoordinates(city);
+
+  } else {
+    today.remove();
+    forecast.remove();
+    getCoordinates(city);
+  }
+  if (button === null) {
+    handlePreviousSearch()
+  } else {
+    button.remove();
+    handlePreviousSearch()
+  }
+
 });
