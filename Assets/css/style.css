@@ -1,3 +1,7 @@
+body {
+  font-size: 16px;
+}
+
 header {
   background: linear-gradient(90deg, rgba(67,76,242,1) 0%, rgba(2,20,105,1) 100%);
 }
@@ -17,4 +21,58 @@ margin: 1rem;
 
 #city-info {
   border: 1px solid black;
+}
+
+.today-title {
+  display: flex;
+}
+
+#today p {
+  color:  rgba(2,20,105,1);
+}
+.add-border {
+  border: 1px solid black;
+  padding: 1rem;
+  border-radius: 2px;
+}
+
+input#city {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 1rem;
+}
+
+button {
+  width: 100%;
+}
+
+#weather-wrapper {
+  margin-left: 2rem;
+}
+
+.forecast-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.forecast-wrapper div {
+  background-color: rgba(2,20,105,1);
+  padding: 1rem;
+  color: white;
+  border-radius: 2px;
+}
+
+#forecast {
+  margin-top: 2rem;
+}
+
+#forecast h4, .today-title > h3, aside > h2 {
+  font-weight: 700;
+  color:  rgba(2,20,105,1);
+}
+
+@media screen and (min-width: 1200px) {
+  .forecast-wrapper div {
+    min-width: 200px;
+  }
 }
