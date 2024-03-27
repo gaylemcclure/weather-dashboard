@@ -78,7 +78,7 @@ const makeTodayWeather = (todayData) => {
     cityTitle.textContent = `${citySearch} (${dayjs.utc(dateObj).format("DD/MM/YYYY")})`;
     const icon = document.createElement("img");
     icon.className = "weather-icon";
-    icon.src = `http://openweathermap.org/img/w/${todayData[0].weather[0].icon}.png`;
+    icon.src = `https://openweathermap.org/img/w/${todayData[0].weather[0].icon}.png`;
     title.append(cityTitle, icon);
 
     //Create the details
@@ -116,7 +116,7 @@ const makeForecast = (forecastData) => {
     //Create each forecast box
     date.textContent = dayjs.utc(dateObj).format("DD/MM/YYYY");
     icon.className = "weather-icon";
-    icon.src = `http://openweathermap.org/img/w/${data.weather[0].icon}.png`;
+    icon.src = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
     temp.textContent = `Temp: ${data.main.temp} °F`;
     wind.textContent = `Wind: ${data.wind.speed} MPH`;
     hum.textContent = `Humidity: ${data.main.humidity} %`;
