@@ -18,7 +18,7 @@ const todayDate = dayjs().utc().format("D");
 //Get the coordinates of the city entered
 const getCoordinates = (city) => {
   let cityName = city.toLowerCase();
-  const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
+  const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
   fetch(geoUrl)
     .then(function (response) {
       return response.json();
