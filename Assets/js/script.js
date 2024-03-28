@@ -125,6 +125,8 @@ const makeForecast = (forecastData) => {
   //Append to Forecast div
   forecastDiv.append(fTitle, fData);
   forecastEl.append(forecastDiv);
+  //Clear input after search
+  inputEl.value = ""
 };
 
 //Create a button for each saved city in local storage
@@ -163,11 +165,13 @@ const handlePreviousSearch = () => {
 handlePreviousSearch();
 
 //Add event listener to the search button & call function
-buttonEl.addEventListener("click", () => {
+buttonEl.addEventListener("click", (e) => {
+
   let today = document.querySelector("#today-inner");
   let forecast = document.querySelector("#forecast-inner");
   let button = document.querySelector("#button-inner");
   let city = inputEl.value;
+
 
   // //Saves the location to local storage
   let saved = JSON.parse(localStorage.getItem("city"));
