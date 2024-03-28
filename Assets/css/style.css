@@ -83,6 +83,11 @@ button {
   background-color: #e7e1e1;
 }
 
+#previous-search {
+  border-top: 1px solid rgba(2,20,105,1);
+  margin-top: 1rem;
+}
+
 @media screen and (min-width: 1200px) {
   .forecast-wrapper div {
     min-width: 200px;
