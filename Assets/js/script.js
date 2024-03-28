@@ -170,7 +170,6 @@ buttonEl.addEventListener("click", () => {
   let city = inputEl.value;
 
   // //Saves the location to local storage
-  // localStorage.setItem("city", city)
   let saved = JSON.parse(localStorage.getItem("city"));
   //Check if local storage is empty or not and save accordingly
   if (saved === null) {

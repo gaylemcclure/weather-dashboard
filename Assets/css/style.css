@@ -79,6 +79,10 @@ button {
   font-weight: 500;
 }
 
+#button-inner button:hover {
+  background-color: #e7e1e1;
+}
+
 @media screen and (min-width: 1200px) {
   .forecast-wrapper div {
     min-width: 200px;
